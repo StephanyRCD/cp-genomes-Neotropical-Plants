@@ -1,3 +1,12 @@
+#!/bin/bash
+# 01_curacion_y_seleccion_plastomas.sh
+# Pipeline completo para:
+#  - filtrar especies neotropicales desde WCVP
+#  - generar llaves taxonómicas
+#  - intersectar WCVP ↔ NCBI RefSeq plastid
+#  - evaluar cobertura por familia
+#  - seleccionar 30 familias × 5 géneros = 150 plastomas
+# Produce: plastomas_150_neotrop.fna
 #Descarga de DB Kew GardenS (WCVP)
 #Generación de una nueva lista filtrada por términos como Neotrópico o Sudamérica o países pertenecientes a estas regiones (en R)
 # En bash:
@@ -148,3 +157,4 @@ awk 'NR==FNR {
   > plastomas_150_neotrop.fna
 grep -c "^>" plastomas_150_neotrop.fna #verificando
 head plastomas_150_neotrop.fna #verificando
+

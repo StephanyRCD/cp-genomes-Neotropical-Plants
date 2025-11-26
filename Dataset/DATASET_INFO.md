@@ -3,6 +3,7 @@ Este repositorio utiliza datasets externos que, por su tamaño, no pueden ser in
 A continuación se describe cada dataset, su contenido, origen y cómo acceder a él.
 ## 1. World Checklist of Vascular Plants (WCVP)
 Esta base de datos onstituye una de las fuentes taxonómicas más autorizadas y exhaustivas para la flora mundial, desarrollada y mantenida por el Royal Botanic Gardens, Kew. Su principal fortaleza radica en ofrecer un marco taxonómico globalmente estandarizado, con información actualizada sobre nombres aceptados, sinonimias y distribución geográfica de las plantas vasculares. 
+
 **Archivos:**
 - `wcvp_names.csv`
 - `wcvp_distribution.csv`

@@ -1,4 +1,4 @@
-# Patrones filogenéticos y diversidad genética entre familias de plantas neotropicales basadas en genomas cloroplastidiales
+# Patrones filogenómicos y diversidad genética en un conjunto representativo de familias de plantas neotropicales con mayor diversidad y representación cloroplastidial
 Este repositorio contendrá el flujo completo para analizar la estructura filogenómica y la diversidad genética entre familias de plantas neotropicales, utilizando genomas cloroplastidiales completos (RefSeq) y un filtrado taxonómico basado en WCVP (Kew Gardens).
 ## Hipótesis
 La diversidad nucleotídica dentro de las familias neotropicales es menor que la diversidad entre familias, lo que permite recuperar agrupamientos filogenéticos coherentes mediante genomas cloroplastidiales.

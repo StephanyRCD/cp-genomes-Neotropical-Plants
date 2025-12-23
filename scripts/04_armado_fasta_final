@@ -1,0 +1,31 @@
+# ============================================================
+# 04_armado_fasta_final.sh
+# Objetivo:
+#   Filtrar un FASTA grande (plastid_refseq.fna) usando una lista de
+#   accesiones (1 por línea) para construir el FASTA final balanceado.
+# ============================================================
+
+# (1) Filtrar FASTA por accession
+awk 'NR==FNR {acc[$1]=1; next}
+     /^>/ {id=$1; sub(/^>/,"",id); keep=(id in acc)}
+     keep' \
+  seleccion_10x5_accessions.txt \
+  NCBI/plastid_refseq.fna \
+> plastomas_10x5_neotrop.fna
+
+# (2) Auditoría: accesiones encontradas (desde el FASTA filtrado)
+grep '^>' plastomas_10x5_neotrop.fna \
+  | sed 's/^>//' \
+  | awk '{print $1}' \
+  | sort -u \
+  > found.txt
+
+# (3) Auditoría: accesiones solicitadas (normalizadas: únicas y ordenadas)
+sort -u seleccion_10x5_accessions.txt > wanted.txt
+
+# (4) Auditoría: accesiones faltantes (solicitadas - encontradas)
+comm -23 wanted.txt found.txt > missing.txt
+
+# (5) Conteo rápido (opcional, sin imprimir mucho)
+grep -c '^>' plastomas_10x5_neotrop.fna > n_headers_out.txt
+wc -l missing.txt > n_missing.txt

@@ -1,0 +1,29 @@
+# ============================================================
+# 05_alineamiento_trim_filogenia.sh
+# Objetivos:
+#   (1) Alinear plastomas con MAFFT
+#   (2) Trimear alineamiento con trimAl (automated1)
+#   (3) Auditar gaps por secuencia (post-trim)
+#   (4) Inferir filogenia con IQ-TREE2 (MFP + UFboot + aLRT)
+#   (5) Verificar outputs principales y tamaños
+# ============================================================
+
+# (1) Alineamiento
+mafft --auto --thread 38 plastomas_10x5_neotrop.fna > plastomas_10x5.aln.FASTA
+
+# (2) Trimado
+trimal -in plastomas_10x5.aln.fasta -out plastomas_10x5.aln.trimal.fasta -automated1
+
+# (3) Stats de trimado (gaps por secuencia; ordenar por % gaps desc)
+awk 'BEGIN{OFS="\t"}
+/^>/{ if(seen){ pct=(len>0)?100*gaps/len:0; printf "%s\t%d\t%d\t%.4f\n", id, gaps, len, pct }
+      id=substr($0,2); gaps=0; len=0; seen=1; next }
+{ line=$0; gsub(/\r/,"",line); len+=length(line); gaps+=gsub(/-/, "", line) }
+END{ pct=(len>0)?100*gaps/len:0; printf "%s\t%d\t%d\t%.4f\n", id, gaps, len, pct }' \
+plastomas_10x5.aln.trimal.fasta | sort -k4,4nr > gaps_OK2.tsv
+
+# (4) Filogenia (MFP + UFboot + aLRT)
+iqtree2 -s plastomas_10x5.aln.trimal.fasta -m MFP -B 1000 -alrt 1000 -T 36
+
+# (5) Verificación de que existen los archivos de filogenia y sus tamaños:
+ls -lh plastomas_10x5.aln.trimal.fasta.* | egrep "treefile|contree|iqtree|log"
